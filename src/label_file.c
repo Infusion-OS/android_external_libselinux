@@ -256,7 +256,7 @@ static int compile_regex(struct saved_data *data, spec_t *spec, const char **err
 	*cp = '\0';
 
 	/* Compile the regular expression. */
-	spec->regex = pcre_compile(anchored_regex, PCRE_DOTALL, &tmperrbuf, &erroff, NULL);
+	spec->regex = pcre_compile(anchored_regex, 0, &tmperrbuf, &erroff, NULL);
 	free(anchored_regex);
 	if (!spec->regex) {
 		if (errbuf)
@@ -568,7 +568,7 @@ static void closef(struct selabel_handle *rec)
 		free(data->spec_arr);
 	if (data->stem_arr)
 		free(data->stem_arr);
-	
+
 	free(data);
 }
 
@@ -615,7 +615,7 @@ static spec_t *lookup_common(struct selabel_handle *rec,
 	if (partial)
 		pcre_options |= PCRE_PARTIAL_SOFT;
 
-	/* 
+	/*
 	 * Check for matching specifications in reverse order, so that
 	 * the last matching specification is used.
 	 */
